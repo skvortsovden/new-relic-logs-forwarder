@@ -12,6 +12,6 @@ class HttpHandler(BaseHTTPRequestHandler):
 
         self.send_response(message="POST",code=200)
 
-
-httpd = socketserver.TCPServer(("", os.environ['PORT']), HttpHandler)
+port = os.environ.get('PORT', 8080)
+httpd = socketserver.TCPServer(("", port), HttpHandler)
 httpd.serve_forever()
