@@ -15,7 +15,7 @@ class headerlessLogAPI:
 
     def send_message(self, data):
         try:
-            repsonse = requests.post(url=self.endpoint, data=data)
+            repsonse = requests.post(url=self.endpoint, data={'message': data})
             print(f"headerlessLogAPI: status code: {repsonse.status_code}")
         except HTTPError as e:
             print(e)
