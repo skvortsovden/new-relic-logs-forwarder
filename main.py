@@ -1,5 +1,6 @@
 import socketserver
 from http.server import BaseHTTPRequestHandler
+import os
 
 class HttpHandler(BaseHTTPRequestHandler):
 
@@ -11,5 +12,6 @@ class HttpHandler(BaseHTTPRequestHandler):
 
         self.send_response(message="POST",code=200)
 
-httpd = socketserver.TCPServer(("", 8080), HttpHandler)
+
+httpd = socketserver.TCPServer(("", os.environ['PORT']), HttpHandler)
 httpd.serve_forever()
