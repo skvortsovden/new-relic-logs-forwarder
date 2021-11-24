@@ -28,7 +28,7 @@ class headerlessLogAPI:
 class HttpHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        if self.path == '/health':
+        if self.path == '/isalive':
             self.wfile.write(bytes("alive","utf-8"))
             self.send_response(message="ok",code=200)
 
