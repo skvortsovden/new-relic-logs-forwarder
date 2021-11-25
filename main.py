@@ -27,8 +27,9 @@ class headerlessLogAPI:
 class HttpHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        if self.path == '/health':
-            self.send_response(message="ok",code=200)
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
 
     def do_POST(self):
         if self.path == '/logs':
