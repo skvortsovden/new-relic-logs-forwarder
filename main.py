@@ -4,7 +4,6 @@ import os
 import requests
 from requests.models import HTTPError
 
-app_url = os.environ.get('APP_URL', 'http://localhost')
 port = os.environ.get('PORT', 8080)
 logs_api_endpoint = os.environ.get('LOGS_API_ENDPOINT')
 
@@ -28,8 +27,7 @@ class headerlessLogAPI:
 class HttpHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        if self.path == '/isalive':
-            self.wfile.write(bytes("alive","utf-8"))
+        if self.path == '/health':
             self.send_response(message="ok",code=200)
 
     def do_POST(self):
