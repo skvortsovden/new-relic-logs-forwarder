@@ -3,12 +3,13 @@ from http.server import BaseHTTPRequestHandler
 import os
 import requests
 from requests.models import HTTPError
+import re
+import json 
 
 port = os.environ.get('PORT', 8080)
 logs_api_endpoint = os.environ.get('LOGS_API_ENDPOINT')
 
-
-class headerlessLogAPI:
+class HeaderlessLogAPI:
 
     def __init__(self, endpoint) -> None:
         self.endpoint = endpoint
@@ -17,7 +18,10 @@ class headerlessLogAPI:
         try:
             print(f"headerlessLogAPI send_message")
             decoded_data = data.decode('utf8').replace("'", '"')
-            repsonse = requests.post(url=self.endpoint, json={"message": decoded_data})
+            json_data = re.search('{(.*)}', decoded_data)
+            json_string = "{" + json_data.group(1)+ "}"
+            json_object = json.loads(json_string)
+            repsonse = requests.post(url=self.endpoint, json=json_object)
             print(f"headerlessLogAPI response status code: {repsonse.status_code}")
             print(f"headerlessLogAPI response text: {repsonse.text}")
         except HTTPError as e:
@@ -41,6 +45,6 @@ class HttpHandler(BaseHTTPRequestHandler):
         self.send_response(message="POST",code=200)
 
 
-logs_api = headerlessLogAPI(endpoint=logs_api_endpoint)
+logs_api = HeaderlessLogAPI(endpoint=logs_api_endpoint)
 httpd = socketserver.TCPServer(("", int(port)), HttpHandler)
 httpd.serve_forever()
