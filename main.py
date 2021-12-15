@@ -7,7 +7,7 @@ import re
 import json 
 
 # Proxy server PORT to listen
-port = os.environ.get('PORT', 8080)
+port = os.environ.get('APP_PORT', 8080)
 # New Relic Logs API HTTP endpoint 
 logs_api_endpoint = os.environ.get('LOGS_API_ENDPOINT')
 
